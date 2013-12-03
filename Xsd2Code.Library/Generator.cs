@@ -135,9 +135,9 @@ namespace Xsd2Code.Library
                 }
 
                 //Fixes/handles http://xsd2code.codeplex.com/WorkItem/View.aspx?WorkItemId=6941
-                foreach (XmlSchemaComplexType complex in xsd.Items.OfType<XmlSchemaComplexType>())
+                foreach (XmlSchemaType type in xsd.Items.OfType<XmlSchemaType>())
                 {
-                    var mapping = importer.ImportSchemaType(complex.QualifiedName);
+                    var mapping = importer.ImportSchemaType(type.QualifiedName);
                     exporter.ExportTypeMapping(mapping);
                 }
 
