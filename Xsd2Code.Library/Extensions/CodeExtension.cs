@@ -1913,6 +1913,20 @@ namespace Xsd2Code.Library.Extensions
                     }
                 }
             }
+            
+            // set specified equal to true in setter
+            if (GeneratorContext.GeneratorParams.PropertyParams.GeneratePropertyNameSpecified != PropertyNameSpecifiedType.Default)
+            {
+                if (!prop.Name.EndsWith("Specified"))
+                {
+                    if (type.BaseTypes.IndexOf(new CodeTypeReference(typeof (CollectionBase))) == -1)
+                    {
+                        var propSpecified = new CodePropertyReferenceExpression(new CodeThisReferenceExpression(), prop.Name + "Specified");
+                        var propChange = new CodeAssignStatement(propSpecified, new CodePrimitiveExpression(true));
+                        prop.SetStatements.Add(propChange);
+                    }
+                }
+            }
 
             // Add OnPropertyChanged in setter
             if (GeneratorContext.GeneratorParams.EnableDataBinding)
